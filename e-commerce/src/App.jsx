@@ -1,13 +1,13 @@
 import './App.css'
+import MyRoutes from './MyRoutes'
 import LoginPage from './page/LoginPage'
-import ShoppingCart from './page/ShoppingCart'
 
 function App() {
 
   return (
     <>
       
-        <LoginPage/>
+        <MyRoutes/>
      
     </>
   )
