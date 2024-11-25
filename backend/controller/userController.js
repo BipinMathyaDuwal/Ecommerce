@@ -1,4 +1,4 @@
-const User = require('../models/userModel')
+const User = require('../models/userModels')
 const Token = require('../models/tokenModel')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
@@ -13,7 +13,7 @@ const saltRounds = 10
 //register
 exports.register = async (req, res) => {
     //take input form user
-const {username,email, password} = req.body
+const {username,email, password, address} = req.body
 
     // check if username is available
 let usernameExists = await User.findOne({username:username})
@@ -30,32 +30,32 @@ let salt = await bcrypt.genSalt(saltRounds)
 let hashed_password = await bcrypt.hash(password, salt)
     //register user
 let newUser = await User.create({
-    username, email, password:hashed_password
+    username, email, password:hashed_password, address
 })
 if(!newUser){
     return res.status(400).json({error:"user not created"})
 }
     // generate verification token
 
-    // send token in email
-let token = await Token.create({
-    token: crypto.randomBytes(16).toString('hex'),
-    user: newUser._id
-})
-if(!token){
-    return res.status(400).json({error:"token not created"})
-}
+//     // send token in email
+// let token = await Token.create({
+//     token: crypto.randomBytes(16).toString('hex'),
+//     user: newUser._id
+// })
+// if(!token){
+//     return res.status(400).json({error:"token not created"})
+// }
 
-const URL = `http://localhost:3001/verifyuser/${token.token}`
+// const URL = `http://localhost:3001/verifyuser/${token.token}`
 
-sendEmail({
-    from : 'noreply@something.com',
-    to: email,
-    subject: 'Verify your email',
-    text: `Click on this link to verify your email ${URL}`,
-    html : `<a href = '${URL}'><button> verify Account</button></a>`
+// sendEmail({
+//     from : 'noreply@something.com',
+//     to: email,
+//     subject: 'Verify your email',
+//     text: `Click on this link to verify your email ${URL}`,
+//     html : `<a href = '${URL}'><button> verify Account</button></a>`
 
-})
+// })
     //send mesage to user
     res.send({newUser, message: "user registered successfully"})
 }
@@ -144,17 +144,18 @@ exports.signIn = async (req, res)=>{
         return res.status(400).json({error: "Password is incorrect. please try again"})
         }
     // check if user is verified or not
-        if(!user.isVerified){
-            return res.status(400).json({error: "Your account is not verified. Please check again"})
-        }
-    //generate login token
-    let token = jwt.sign({
-        id: user._id, 
-        email,
-        role:user.role,
-        username:user.username}, process.env.JWT_SECRET,{expiresIn : '24hr'})
-    //set login data in cookies
-    res.cookie('mycookie',token,{ expiresIn:86400})
+    //     if(!user.isVerified){
+    //         return res.status(400).json({error: "Your account is not verified. Please check again"})
+    //     }
+    // //generate login token
+    // let token = jwt.sign({
+    //     id: user._id, 
+    //     email,
+    //     role:user.role,
+    //     username:user.username}, process.env.JWT_SECRET,{expiresIn : '24hr'})
+    // //set login data in cookies
+    // res.cookie('mycookie',token,{ expiresIn:86400})
     //send tooken to user
-    res.send({message: "login successfully",user:{id:user._id,email,username:user.username }, token})
+    // res.send({message: "login successfully",user:{id:user._id,email,username:user.username }, token})
+    res.send({message: "login successfully",user:{id:user._id,email,username:user.username }})
 }
