@@ -27,7 +27,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-[75vh] flex flex-col items-center justify-center bg-gray-100 px-6 py-12 bg-[url(/bg1.png)] bg-no-repeat bg-cover bg-center">
+    <div className="min-h-[75vh] flex flex-col items-center justify-center bg-gray-100 px-6 py-12 ">
       {/* Logo at the top center */}
       <div className="text-center mb-6">
         <img src="/logo1.png" alt="Pasa Logo" className="w-80 mx-auto" />

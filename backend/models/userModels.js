@@ -22,9 +22,17 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    phone:{
+        type: String,
+    },
     address: {
         type: String,
         default: ''
+    },
+    profileImage:{
+        type: String,
+        default: "",
+        trim: true
     },
     isVerified: {
         type: Boolean,

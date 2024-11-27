@@ -37,26 +37,26 @@ if(!newUser){
 }
     // generate verification token
 
-//     // send token in email
-// let token = await Token.create({
-//     token: crypto.randomBytes(16).toString('hex'),
-//     user: newUser._id
-// })
-// if(!token){
-//     return res.status(400).json({error:"token not created"})
-// }
+    // send token in email
+let token = await Token.create({
+    token: crypto.randomBytes(16).toString('hex'),
+    user: newUser._id
+})
+if(!token){
+    return res.status(400).json({error:"token not created"})
+}
 
-// const URL = `http://localhost:3001/verifyuser/${token.token}`
+const URL = `http://localhost:3001/verifyuser/${token.token}`
 
-// sendEmail({
-//     from : 'noreply@something.com',
-//     to: email,
-//     subject: 'Verify your email',
-//     text: `Click on this link to verify your email ${URL}`,
-//     html : `<a href = '${URL}'><button> verify Account</button></a>`
+sendEmail({
+    from : 'noreply@something.com',
+    to: email,
+    subject: 'Verify your email',
+    text: `Click on this link to verify your email ${URL}`,
+    html : `<a href = '${URL}'><button> verify Account</button></a>`
 
-// })
-    //send mesage to user
+})
+    // send mesage to user
     res.send({newUser, message: "user registered successfully"})
 }
 
@@ -144,18 +144,34 @@ exports.signIn = async (req, res)=>{
         return res.status(400).json({error: "Password is incorrect. please try again"})
         }
     // check if user is verified or not
-    //     if(!user.isVerified){
-    //         return res.status(400).json({error: "Your account is not verified. Please check again"})
-    //     }
+        if(!user.isVerified){
+            return res.status(400).json({error: "Your account is not verified. Please check again"})
+        }
     // //generate login token
-    // let token = jwt.sign({
-    //     id: user._id, 
-    //     email,
-    //     role:user.role,
-    //     username:user.username}, process.env.JWT_SECRET,{expiresIn : '24hr'})
-    // //set login data in cookies
-    // res.cookie('mycookie',token,{ expiresIn:86400})
-    //send tooken to user
-    // res.send({message: "login successfully",user:{id:user._id,email,username:user.username }, token})
-    res.send({message: "login successfully",user:{id:user._id,email,username:user.username }})
+    let token = jwt.sign({
+        id: user._id, 
+        email,
+        role:user.role,
+        username:user.username}, process.env.JWT_SECRET,{expiresIn : '24hr'})
+    //set login data in cookies
+    res.cookie('mycookie',token,{ expiresIn:86400})
+    // send tooken to user
+    res.send({message: "login successfully",user:{id:user._id,email,username:user.username }, token})
+    // res.send({message: "login successfully",user:{id:user._id,email,username:user.username }})
+}
+
+//profileeee
+
+exports.editProfile = async (req, res) => {
+   let user = await User.findByIdAndUpdate(req.params.userid,{
+    profileImage : req.file.path,
+    username : req.body.username,
+    phone : req.body.phone
+   })
+   if(!user){
+    return res.status(400).json({error: "User not found. Please signup first"})
+   }
+   else{
+    return res.status(200).json({message: "Profile updated successfully"})
+   }
 }
