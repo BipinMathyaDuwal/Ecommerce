@@ -15,9 +15,6 @@ dist-ssr/
 *.local
 
 # Keep necessary files
-!tailwind.config.js
-!postcss.config.js
-!package.json
 !package-lock.json
 
 # Editor directories and files
