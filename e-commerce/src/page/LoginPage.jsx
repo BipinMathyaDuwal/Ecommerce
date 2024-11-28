@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../apiCalls/userApi";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,9 +20,24 @@ const LoginPage = () => {
       login({email,password})
       .then((response) => {
         if (response.error){
-          console.log(response.error)
+          Swal.fire({
+            title: "Error",
+            html: response.error,
+            icon : "warning",
+            timerProgressBar : true,
+            timer : 2000
+          })
         }else{
-          alert(response)
+          Swal.fire({
+            title: "Login Success",
+            icon : "success",
+            html: "Your favourite products are here!",
+            timerProgressBar : true,
+            timer : 2000
+          })
+          .then(()=>{
+            navigate("/profile")
+          })
         }
         })
       console.log("Email:", email, "Password:", password);
