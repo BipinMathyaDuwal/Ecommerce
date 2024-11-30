@@ -24,14 +24,15 @@ const userSchema = new mongoose.Schema({
     },
     phone:{
         type: String,
+        default:"989899898"
     },
     address: {
         type: String,
-        default: ''
+        trim: true,
     },
     profileImage:{
         type: String,
-        default: "",
+        default: "pro.jpg",
         trim: true
     },
     isVerified: {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../apiCalls/userApi";
+import { authenticat, login } from "../apiCalls/userApi";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
@@ -17,30 +17,41 @@ const LoginPage = () => {
     } else {
       setError("");
       // Handle login logic here
-      login({email,password})
-      .then((response) => {
-        if (response.error){
-          Swal.fire({
-            title: "Error",
-            html: response.error,
-            icon : "warning",
-            timerProgressBar : true,
-            timer : 2000
-          })
-        }else{
-          Swal.fire({
-            title: "Login Success",
-            icon : "success",
-            html: "Your favourite products are here!",
-            timerProgressBar : true,
-            timer : 2000
-          })
-          .then(()=>{
-            navigate("/profile")
-          })
-        }
+      login({ email, password })
+        .then((response) => {
+          if (response.error) {
+            Swal.fire({
+              title: "Error",
+              html: response.error,
+              icon: "warning",
+              timerProgressBar: true,
+              timer: 2000,
+            });
+          } else {
+            Swal.fire({
+              title: "Login Success",
+              icon: "success",
+              html: response.message,
+              timerProgressBar: true,
+              timer: 2000,
+            }).then(() => {
+              // Save JWT token
+              authenticat(response)
+              // Navigate to the profile page
+              navigate("/profile");
+            });
+          }
         })
-      console.log("Email:", email, "Password:", password);
+        .catch((error) => {
+          Swal.fire({
+            title: "Unexpected Error",
+            html: "Something went wrong. Please try again.",
+            icon: "error",
+            timerProgressBar: true,
+            timer: 2000,
+          });
+          console.error("Login error:", error);
+        });
     }
   };
 
@@ -73,7 +84,10 @@ const LoginPage = () => {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <input
@@ -89,7 +103,10 @@ const LoginPage = () => {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input
@@ -105,8 +122,16 @@ const LoginPage = () => {
 
             {/* Remember Me Checkbox */}
             <div className="flex items-center">
-              <input type="checkbox" id="rememberme" name="rememberme" className="h-4 w-4 text-indigo-600 border-gray-300 rounded" />
-              <label htmlFor="rememberme" className="ml-2 text-sm text-gray-900">
+              <input
+                type="checkbox"
+                id="rememberme"
+                name="rememberme"
+                className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+              />
+              <label
+                htmlFor="rememberme"
+                className="ml-2 text-sm text-gray-900"
+              >
                 Remember me
               </label>
             </div>
@@ -122,7 +147,10 @@ const LoginPage = () => {
             </div>
 
             <div className="text-sm text-center">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a
+                href="#"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 Forgot your password?
               </a>
             </div>
@@ -130,7 +158,10 @@ const LoginPage = () => {
 
           <p className="mt-6 text-center text-sm text-gray-500">
             Don't have an account?{" "}
-            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link
+              to="/register"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
               Register here
             </Link>
           </p>

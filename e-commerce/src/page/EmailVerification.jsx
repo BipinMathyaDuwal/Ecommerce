@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; // for extracting the token from the URL
-import { verifyUser } from '../api_calls/userApi';
+import { verifyUser } from '../apiCalls/userApi';
 
 function EmailVerification() {
   const { token } = useParams(); // Extract the token from the URL

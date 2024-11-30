@@ -4,6 +4,7 @@ import LoginPage from './page/LoginPage'
 import Layout from './page/Layout'
 import Register from './page/Register'
 import Profile from './page/Profile'
+import EmailVerification from './page/EmailVerification'
 
 const MyRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const MyRoutes = () => {
             <Route path='/profile' element={<Profile />} />
 
             </Route>
+            <Route path="/verifyuser/:token" element={<EmailVerification/>}/>
         </Routes>
       </BrowserRouter>
     </>
