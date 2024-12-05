@@ -182,7 +182,7 @@ exports.editProfile = async (req, res) => {
     // const imageName = req.file.filename;  // This will give you just the filename, e.g., "fav-1732968603927.png"
 
     let user = await User.findByIdAndUpdate(req.params.userid, {
-        profileImage: req.file.filename, //req.file.path
+        profileImage: req.file?.filename, //req.file.path
         username: req.body.username,
         phone: req.body.phone,
         address : req.body.address,

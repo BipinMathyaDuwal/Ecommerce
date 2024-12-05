@@ -31,11 +31,17 @@ const Profile = () => {
               phone: data.phone || "",
               address: data.address || "",
             });
+
+            // Set profile image preview
+            const imageUrl = data.profileImage 
+              ? `${API}/profileImages/${data.profileImage}` 
+              : "/defaultProfile.png"; // Fallback to a default image if profileImage is null
+            setProfileImagePreview(imageUrl);
           }
         })
         .catch((err) => console.error("Error fetching user data:", err));
     }
-  }, []);
+  }, [isEditModalOpen]);
 
   // Handle input changes in the edit form
   const handleEditChange = (e) => {

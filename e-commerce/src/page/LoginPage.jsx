@@ -45,7 +45,7 @@ const LoginPage = () => {
         .catch((error) => {
           Swal.fire({
             title: "Unexpected Error",
-            html: "Something went wrong. Please try again.",
+            html: "Something went wrong. Please try againkajshgfkjahdsakjsdh.",
             icon: "error",
             timerProgressBar: true,
             timer: 2000,
