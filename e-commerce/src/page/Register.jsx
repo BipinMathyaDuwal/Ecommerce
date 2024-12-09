@@ -13,13 +13,12 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target; // Extract name and value from the event
+    const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validation logic
     if (!user.username || !user.email || !user.password || !user.confirmPassword || !user.address) {
       setError("All fields are required!");
     } else if (user.password !== user.confirmPassword) {
@@ -37,28 +36,31 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-[100vh] w-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto w-full object-contain"
-          src="/logo1.png"
-          alt="pasa"
-        />
+    <div className="min-h-[75vh] flex flex-col items-center justify-center bg-gray-100 px-6 py-12">
+      {/* Logo at the top center */}
+      <div className="text-center mb-6">
+        <img src="/logo1.png" alt="Pasa Logo" className="w-80 mx-auto" />
       </div>
 
-      <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm shadow-[0_0_60px_rgba(0,0,0,0.3)] rounded-xl p-8 pt-4 bg-white">
-        <h2 className="mb-2 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-          Create an Account
-        </h2>
+      {/* Main container */}
+      <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-5xl">
+        {/* Left Form Section */}
+        <div className="flex flex-col justify-center w-full md:w-[45%] p-8">
+          <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">
+            Create an Account
+          </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-900">
-              Name
-            </label>
-            <div className="mt-2">
+            {/* Name Field */}
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name
+              </label>
               <input
                 id="username"
                 name="username"
@@ -66,16 +68,18 @@ const Register = () => {
                 value={user.username}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 focus:outline-none sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-              Email
-            </label>
-            <div className="mt-2">
+            {/* Email Field */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
               <input
                 id="email"
                 name="email"
@@ -83,16 +87,18 @@ const Register = () => {
                 value={user.email}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 focus:outline-none sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="address" className="block text-sm font-medium text-gray-900">
-              Address
-            </label>
-            <div className="mt-2">
+            {/* Address Field */}
+            <div>
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Address
+              </label>
               <input
                 id="address"
                 name="address"
@@ -100,16 +106,18 @@ const Register = () => {
                 value={user.address}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 focus:outline-none sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-900">
-              Password
-            </label>
-            <div className="mt-2">
+            {/* Password Field */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -117,16 +125,18 @@ const Register = () => {
                 value={user.password}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 focus:outline-none sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-900">
-              Confirm Password
-            </label>
-            <div className="mt-2">
+            {/* Confirm Password Field */}
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm Password
+              </label>
               <input
                 id="confirmPassword"
                 name="confirmPassword"
@@ -134,30 +144,40 @@ const Register = () => {
                 value={user.confirmPassword}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 focus:outline-none sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
 
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none"
+            {/* Submit Button */}
+            <div>
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-gray-500">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Register
-            </button>
-          </div>
-        </form>
+              Sign in here
+            </Link>
+          </p>
+        </div>
 
-        <p className="mt-8 text-center text-sm text-gray-500">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="font-semibold text-indigo-600 hover:text-indigo-500"
-          >
-            Sign in here
-          </Link>
-        </p>
+        {/* Right Image Section */}
+        <div className="w-full md:w-[60%] p-0 pr-5">
+          <img
+            src="/register1.png"
+            alt="Register illustration"
+            className="h-full w-full object-contain scale-105"
+          />
+        </div>
       </div>
     </div>
   );

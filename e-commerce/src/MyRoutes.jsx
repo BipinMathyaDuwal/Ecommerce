@@ -5,6 +5,7 @@ import Layout from './page/Layout'
 import Register from './page/Register'
 import Profile from './page/Profile'
 import EmailVerification from './page/EmailVerification'
+import AddProductForm from './page/AdminPage/AddProductForm'
 
 const MyRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const MyRoutes = () => {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/addproduct' element={<AddProductForm />} />
 
             </Route>
             <Route path="/verifyuser/:token" element={<EmailVerification/>}/>
