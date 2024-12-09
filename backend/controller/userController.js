@@ -157,7 +157,7 @@ exports.signIn = async (req, res) => {
     //set login data in cookies
     res.cookie('mycookie', token, { expiresIn: 86400 })
     // send tooken to user
-    res.send({ message: "login successfully", user: { id: user._id, email, username: user.username }, token })
+    res.send({ message: "login successfully", user: { id: user._id, email, username: user.username, profileImage:user.profileImage }, token })
     // res.send({message: "login successfully",user:{id:user._id,email,username:user.username }})
 }
 
