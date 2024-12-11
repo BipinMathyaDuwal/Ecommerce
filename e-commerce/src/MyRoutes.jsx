@@ -8,7 +8,6 @@ import EmailVerification from './page/EmailVerification'
 import Homepage from './page/Homepage'
 
 
-
 const MyRoutes = () => {
   return (
     <>
@@ -19,8 +18,7 @@ const MyRoutes = () => {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/Homepage' element={<Homepage />} />
-
+            <Route path='/homepage' element={<Homepage/>}/>
             </Route>
             <Route path="/verifyuser/:token" element={<EmailVerification/>}/>
         </Routes>

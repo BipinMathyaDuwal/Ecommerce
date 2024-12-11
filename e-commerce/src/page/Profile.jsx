@@ -17,7 +17,6 @@ const Profile = () => {
     profileImage: null,
   });
 
-  // Fetch user data on component mount
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     const user = jwt ? JSON.parse(jwt).user : null;
@@ -31,19 +30,22 @@ const Profile = () => {
               phone: data.phone || "",
               address: data.address || "",
             });
+
+            const imageUrl = data.profileImage 
+              ? `${API}/profileImages/${data.profileImage}` 
+              : "/defaultProfile.png";
+            setProfileImagePreview(imageUrl);
           }
         })
         .catch((err) => console.error("Error fetching user data:", err));
     }
-  }, []);
+  }, [isEditModalOpen]);
 
-  // Handle input changes in the edit form
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle image upload and preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -54,7 +56,6 @@ const Profile = () => {
     }
   };
 
-  // Submit the edit profile form
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -83,7 +84,6 @@ const Profile = () => {
     }
   };
 
-  // Reset modal state on close
   const handleModalClose = () => {
     setEditFormData({
       username: userData.username || "",
@@ -98,45 +98,46 @@ const Profile = () => {
   return (
     <div className="container mx-auto p-4">
       {/* Profile Section */}
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full sm:w-2/3 mx-auto">
-        <div className="flex justify-center mb-4">
-          <div className="w-24 h-24 rounded-full overflow-hidden">
-            <img
-              src={
-                profileImagePreview ||
-                (userData.profileImage && `${API}/profileImages/${userData.profileImage}`) ||
-                "https://via.placeholder.com/100"
-              }
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full sm:w-2/3 md:w-9/12 mx-auto flex items-center gap-6">
+        {/* Profile Image */}
+        <div className="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden border-2 border-gray-200">
+          <img
+            src={
+              profileImagePreview ||
+              (userData.profileImage && `${API}/profileImages/${userData.profileImage}`) ||
+              "https://via.placeholder.com/150"
+            }
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
         </div>
-        <div className="text-center mb-6">
-          <h1 className="text-xl font-semibold">{userData.username || "N/A"}</h1>
+
+        {/* User Info */}
+        <div className="flex-grow">
+          <h1 className="text-xl font-semibold text-gray-800">{userData.username || "N/A"}</h1>
           <p className="text-gray-600">{userData.email || "N/A"}</p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
-          <p>
+          <p className="mt-2 text-sm text-gray-700">
             <span className="font-semibold">Phone:</span> {userData.phone || "N/A"}
           </p>
-          <p>
+          <p className="text-sm text-gray-700">
             <span className="font-semibold">Address:</span> {userData.address || "N/A"}
           </p>
         </div>
-        <div className="mt-6 flex justify-center space-x-4">
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={() => setIsEditModalOpen(true)}
-          >
-            Edit Profile
-          </button>
-          <button
-            className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
-            onClick={() => navigate("/change-password")}
-          >
-            Change Password
-          </button>
+
+        {/* Edit Button */}
+        <div className="flex flex-col space-y-2">
+        <button
+          className="bg-blue-500 text-white py-2 px-2 rounded hover:bg-blue-600"
+          onClick={() => setIsEditModalOpen(true)}
+        >
+          Edit Profile
+        </button>
+        <button
+          className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+          
+        >
+          Change Password
+        </button>
         </div>
       </div>
 
@@ -155,11 +156,7 @@ const Profile = () => {
               <div className="text-center">
                 <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
                   <img
-                    src={
-                      profileImagePreview ||
-                      (userData.profileImage && `${API}${userData.profileImage}`) ||
-                      "https://via.placeholder.com/100"
-                    }
+                    src={profileImagePreview || "https://via.placeholder.com/150"}
                     alt="Profile Preview"
                     className="w-full h-full object-cover"
                   />
